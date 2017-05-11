@@ -1,7 +1,10 @@
 node {
-  // Mark the code checkout 'stage'....
-  stage 'Stage Checkout'
-  
-  git branch: 'jira/NMS-9328', url: 'https://github.com/opennms/opennms.git'
-  sh 'docker run -v ./opennms:/usr/src/opennms "/fullbuild.sh -DskipTests=true"'
+    // Mark the code checkout 'stage'....
+    stage ('Stage Checkout') {
+        git branch: 'jira/NMS-9328', url: 'https://github.com/opennms/opennms.git'
+    }
+
+    stage ('Compile and Assemble') {
+        sh 'docker run --rm -v $(pwd)/opennms:/usr/src/opennms opennms/build-env /fullbuild.sh -DskipTests=true'
+    }
 }
