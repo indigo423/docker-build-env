@@ -1,8 +1,7 @@
 node {
   // Mark the code checkout 'stage'....
   stage 'Stage Checkout'
-
-  // Checkout code from repository and update any submodules
-  checkout scm
-  sh 'git clone https://github.com/opennms/opennms.git'
+  
+  git url: 'https://github.com/opennms/opennms'
+  sh 'docker run -v ./opennms:/usr/src/opennms /fullbuild.sh -DskipTests=true'
 }
